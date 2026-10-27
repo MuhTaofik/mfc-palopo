@@ -20,7 +20,7 @@ class PackageSeeder extends Seeder
 
         Package::updateOrCreate(
             ['nama_paket' => 'Paket Bulanan'],
-            ['durasi_hari' => 30, 'harga' => 125000, 'harga_perpanjangan' => 100000]
+            ['durasi_hari' => 30, 'harga' => 100000, 'harga_perpanjangan' => 100000]
         );
     }
 }

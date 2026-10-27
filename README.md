@@ -7,7 +7,7 @@ Proyek mata kuliah **Project Mandiri**.
 |---|---|
 | Mitra | Multi Fitnes Pusat Kebugaran (MULTI FITNES CENTRE), Kota Palopo |
 | Pengembang | Muh Taofik (NIM 24404170), Teknologi Rekayasa Multimedia |
-| Status | Tahap fondasi: proyek Laravel, database, dan struktur folder. Halaman mengikuti desain Figma menyusul. |
+| Status | Selesai diimplementasikan: Halaman Beranda, Profil, Paket Harga, Pendaftaran Online, Cek Status, Kontak, dan Panel Admin sesuai desain Figma. |
 
 ## Tech Stack
 
@@ -95,15 +95,27 @@ Kebutuhan: Laragon (PHP 8.3, MySQL), Composer, Node.js, Git.
    php artisan migrate
    php artisan db:seed
    ```
-   (Alternatif: impor `database/schema.sql` lewat HeidiSQL.)
-8. Jalankan website:
+   *Data awal yang di-seed:*
+   - **Paket Gym**: Paket Harian (Rp15.000) dan Paket Bulanan (Rp100.000).
+   - **Akun Admin Uji**: Username `admin`, Password `admin123`.
+
+8. Jalankan website dan compiler aset:
    ```
+   npm run build
    php artisan serve
    ```
    Buka `http://127.0.0.1:8000`.
 
-## Catatan
+## Daftar Halaman Website
 
-- File `.env` berisi pengaturan pribadi dan tidak diunggah ke GitHub.
-- Akun admin dibuat pada tahap login (kata sandi disimpan sebagai hash bcrypt, tidak ada kata sandi bawaan di repositori).
-- Desain acuan: file Figma proyek (halaman gym).
+1. **Beranda** (`/`): Landing page MFC Palopo, hero section, keunggulan, paket latihan, fasilitas, dan CTA pendaftaran.
+2. **Profil** (`/profil`): Tentang MFC Palopo, visi & misi, jadwal operasional, dan tata tertib gym.
+3. **Paket Harga** (`/paket`): Daftar harga paket membership, tabel komparasi fasilitas, dan FAQ.
+4. **Pendaftaran** (`/pendaftaran`): Formulir pendaftaran member baru / perpanjangan online dengan validasi server.
+5. **Cek Status** (`/cek-status`): Pencarian mandiri status pendaftaran (Menunggu / Diterima / Ditolak) menggunakan nomor kontak atau ID.
+6. **Kontak** (`/kontak`): Informasi kontak, embed Google Maps Kota Palopo, dan formulir kirim pesan.
+7. **Panel Admin** (`/admin/login`):
+   - Login & Logout khusus pengelola gym (Guard `admin`).
+   - Dashboard ringkasan pendaftaran dan anggota.
+   - Manajemen verifikasi pendaftaran (Terima / Tolak). Saat disetujui, otomatis membuat data anggota baru di tabel `members`.
+   - Manajemen member (Pencarian, filter aktif/nonaktif, dan fitur perpanjang masa aktif membership).

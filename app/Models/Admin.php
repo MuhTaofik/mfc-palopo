@@ -21,4 +21,9 @@ class Admin extends Authenticatable
     {
         return $this->password_hash;
     }
+
+    public function getAuthPasswordName(): string
+    {
+        return 'password_hash';
+    }
 }
