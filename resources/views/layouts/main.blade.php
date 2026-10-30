@@ -2,7 +2,7 @@
 <html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title', 'MULTI FITNES CENTRE (MFC) Palopo - Pusat Kebugaran & Gym')</title>
     <meta name="description" content="@yield('meta_description', 'MULTI FITNES CENTRE (MFC) Palopo adalah pusat kebugaran modern di Kota Palopo dengan peralatan lengkap, suasana nyaman, dan harga paket latihan terjangkau.')">
@@ -10,7 +10,7 @@
     <!-- Vite Assets (Tailwind CSS 4, Flowbite, Inter Font) -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-mfc-page font-sans text-mfc-ink antialiased flex min-h-screen flex-col selection:bg-mfc-dark selection:text-white">
+<body class="bg-mfc-page font-sans text-mfc-ink antialiased flex min-h-screen flex-col selection:bg-mfc-dark selection:text-white overflow-x-hidden">
 
     <!-- Navbar Utama -->
     @include('partials.navbar')

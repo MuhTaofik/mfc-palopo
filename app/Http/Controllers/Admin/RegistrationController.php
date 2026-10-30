@@ -8,6 +8,7 @@ use App\Models\Registration;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class RegistrationController extends Controller
@@ -80,5 +81,23 @@ class RegistrationController extends Controller
         ]);
 
         return back()->with('success', "Pendaftaran {$registration->nama} telah berstatus DITOLAK.");
+    }
+
+    /**
+     * Menghapus data pendaftaran secara permanen.
+     */
+    public function destroy(Registration $registration): RedirectResponse
+    {
+        $nama = $registration->nama;
+
+        DB::transaction(function () use ($registration) {
+            // Amankan relasi: lepaskan foreign key pada tabel members jika ada
+            Member::where('registration_id', $registration->id_registration)
+                ->update(['registration_id' => null]);
+
+            $registration->delete();
+        });
+
+        return back()->with('success', "Data pendaftaran atas nama \"{$nama}\" berhasil dihapus.");
     }
 }

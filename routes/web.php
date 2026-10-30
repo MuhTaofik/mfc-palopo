@@ -45,11 +45,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/registrasi', [AdminRegistrationController::class, 'index'])->name('registrations.index');
         Route::patch('/registrasi/{registration}/accept', [AdminRegistrationController::class, 'accept'])->name('registrations.accept');
         Route::patch('/registrasi/{registration}/reject', [AdminRegistrationController::class, 'reject'])->name('registrations.reject');
+        Route::delete('/registrasi/{registration}', [AdminRegistrationController::class, 'destroy'])->name('registrations.destroy');
 
         // Manajemen Member
         Route::get('/member', [AdminMemberController::class, 'index'])->name('members.index');
         Route::patch('/member/{member}/extend', [AdminMemberController::class, 'extend'])->name('members.extend');
         Route::patch('/member/{member}/toggle-status', [AdminMemberController::class, 'toggleStatus'])->name('members.toggle-status');
+        Route::delete('/member/{member}', [AdminMemberController::class, 'destroy'])->name('members.destroy');
     });
 });
 

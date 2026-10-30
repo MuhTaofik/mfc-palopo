@@ -7,6 +7,7 @@ use App\Models\Member;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class MemberController extends Controller
@@ -78,5 +79,19 @@ class MemberController extends Controller
         ]);
 
         return back()->with('success', "Status member {$member->nama} berhasil diubah menjadi {$newStatus}.");
+    }
+
+    /**
+     * Menghapus data member secara permanen.
+     */
+    public function destroy(Member $member): RedirectResponse
+    {
+        $nama = $member->nama;
+
+        DB::transaction(function () use ($member) {
+            $member->delete();
+        });
+
+        return back()->with('success', "Data member atas nama \"{$nama}\" berhasil dihapus.");
     }
 }
