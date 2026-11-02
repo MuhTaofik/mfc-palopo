@@ -114,7 +114,8 @@
                                 @csrf
                                 @method('PATCH')
                                 <button type="submit" 
-                                        onclick="return confirm('Perpanjang masa aktif membership {{ $mbr->nama }}?')"
+                                        data-confirm="Perpanjang masa aktif membership {{ $mbr->nama }}?"
+                                        onclick="return confirm(this.dataset.confirm)"
                                         class="w-full flex items-center justify-center min-h-[40px] rounded-xl bg-mfc-black px-3 py-2 text-xs font-bold text-white hover:bg-mfc-dark shadow-xs transition-colors">
                                     Perpanjang
                                 </button>
@@ -130,7 +131,10 @@
                             </form>
 
                             <button type="button" 
-                                    onclick="openDeleteModal('{{ route('admin.members.destroy', $mbr) }}', '{{ addslashes($mbr->nama) }}', 'member')"
+                                    data-action="{{ route('admin.members.destroy', $mbr) }}"
+                                    data-name="{{ $mbr->nama }}"
+                                    data-type="member"
+                                    onclick="openDeleteModal(this.dataset.action, this.dataset.name, this.dataset.type)"
                                     title="Hapus data member"
                                     class="flex items-center justify-center min-h-[40px] rounded-xl border border-rose-200 bg-rose-50/60 px-3 py-2 text-xs font-bold text-rose-600 hover:bg-rose-100 transition-colors shrink-0">
                                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -222,7 +226,8 @@
                                             @method('PATCH')
                                             <button type="submit" 
                                                     title="Perpanjang sesuai durasi paket"
-                                                    onclick="return confirm('Perpanjang masa aktif membership {{ $mbr->nama }}?')"
+                                                    data-confirm="Perpanjang masa aktif membership {{ $mbr->nama }}?"
+                                                    onclick="return confirm(this.dataset.confirm)"
                                                     class="rounded-lg bg-mfc-black px-2.5 py-1.5 text-xs font-bold text-white hover:bg-mfc-dark shadow-xs transition-colors">
                                                 Perpanjang
                                             </button>
@@ -240,7 +245,10 @@
 
                                         <!-- Tombol Hapus -->
                                         <button type="button" 
-                                                onclick="openDeleteModal('{{ route('admin.members.destroy', $mbr) }}', '{{ addslashes($mbr->nama) }}', 'member')"
+                                                data-action="{{ route('admin.members.destroy', $mbr) }}"
+                                                data-name="{{ $mbr->nama }}"
+                                                data-type="member"
+                                                onclick="openDeleteModal(this.dataset.action, this.dataset.name, this.dataset.type)"
                                                 title="Hapus data member"
                                                 class="rounded-lg border border-rose-200 bg-rose-50/60 px-2.5 py-1.5 text-xs font-bold text-rose-600 hover:bg-rose-100 transition-colors inline-flex items-center gap-1">
                                             <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">

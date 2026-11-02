@@ -25,7 +25,10 @@ Route::get('/kontak', [PublicController::class, 'kontak'])->name('kontak');
 */
 Route::get('/pendaftaran', [RegistrationController::class, 'create'])->name('pendaftaran');
 Route::post('/pendaftaran', [RegistrationController::class, 'store'])->name('pendaftaran.store');
-Route::get('/cek-status', [RegistrationController::class, 'checkStatus'])->name('cek-status');
+Route::get('/cek-status', [RegistrationController::class, 'showCheckStatus'])->name('cek-status');
+Route::post('/cek-status', [RegistrationController::class, 'checkStatus'])
+    ->name('cek-status.check')
+    ->middleware('throttle:cek-status');
 
 /*
 |--------------------------------------------------------------------------
@@ -34,12 +37,18 @@ Route::get('/cek-status', [RegistrationController::class, 'checkStatus'])->name(
 */
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [AdminAuthController::class, 'login'])->name('login.submit');
+    Route::post('/login', [AdminAuthController::class, 'login'])
+        ->name('login.submit')
+        ->middleware('throttle:admin-login');
     Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
 
     // Rute yang Dilindungi Autentikasi Admin
     Route::middleware('auth:admin')->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+
+        // Pengaturan Akun Admin & Ganti Password
+        Route::get('/password', [AdminAuthController::class, 'showChangePasswordForm'])->name('password.edit');
+        Route::put('/password', [AdminAuthController::class, 'updatePassword'])->name('password.update');
 
         // Manajemen Pendaftaran
         Route::get('/registrasi', [AdminRegistrationController::class, 'index'])->name('registrations.index');
@@ -54,5 +63,3 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/member/{member}', [AdminMemberController::class, 'destroy'])->name('members.destroy');
     });
 });
-
-Route::view('/tes-tampilan', 'tes-tampilan');

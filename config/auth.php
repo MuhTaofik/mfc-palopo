@@ -117,4 +117,20 @@ return [
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Akun Default Pengelola Admin (E3 — Keamanan)
+    |--------------------------------------------------------------------------
+    |
+    | Konfigurasi kredensial awal akun admin yang digunakan oleh AdminSeeder.
+    | Nilai dibaca dari variabel lingkungan dan diakses melalui config()
+    | agar tetap berfungsi normal saat config:cache aktif di produksi.
+    |
+    */
+
+    'admin' => [
+        'default_user'     => env('ADMIN_DEFAULT_USER', 'admin'),
+        'default_password' => env('ADMIN_DEFAULT_PASSWORD'),
+    ],
+
 ];

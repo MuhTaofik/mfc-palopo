@@ -138,7 +138,8 @@
                                     @csrf
                                     @method('PATCH')
                                     <button type="submit" 
-                                            onclick="return confirm('Konfirmasi terima pendaftaran {{ $reg->nama }} dan daftarkan sebagai member?')"
+                                            data-confirm="Konfirmasi terima pendaftaran {{ $reg->nama }} dan daftarkan sebagai member?"
+                                            onclick="return confirm(this.dataset.confirm)"
                                             class="w-full flex items-center justify-center min-h-[38px] rounded-xl bg-emerald-600 px-3 py-2 text-xs font-bold text-white hover:bg-emerald-700 transition-colors">
                                         Terima
                                     </button>
@@ -147,7 +148,8 @@
                                     @csrf
                                     @method('PATCH')
                                     <button type="submit" 
-                                            onclick="return confirm('Tolak pendaftaran {{ $reg->nama }}?')"
+                                            data-confirm="Tolak pendaftaran {{ $reg->nama }}?"
+                                            onclick="return confirm(this.dataset.confirm)"
                                             class="w-full flex items-center justify-center min-h-[38px] rounded-xl border border-mfc-line px-3 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50 transition-colors">
                                         Tolak
                                     </button>
@@ -155,7 +157,10 @@
                             @endif
 
                             <button type="button" 
-                                    onclick="openDeleteModal('{{ route('admin.registrations.destroy', $reg) }}', '{{ addslashes($reg->nama) }}', 'pendaftaran')"
+                                    data-action="{{ route('admin.registrations.destroy', $reg) }}"
+                                    data-name="{{ $reg->nama }}"
+                                    data-type="pendaftaran"
+                                    onclick="openDeleteModal(this.dataset.action, this.dataset.name, this.dataset.type)"
                                     title="Hapus data pendaftaran"
                                     class="{{ $reg->status_pendaftaran === 'Menunggu' ? 'px-3' : 'w-full' }} flex items-center justify-center min-h-[38px] rounded-xl border border-rose-200 bg-rose-50/60 py-2 text-xs font-bold text-rose-600 hover:bg-rose-100 transition-colors gap-1.5">
                                 <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -226,7 +231,8 @@
                                                 @method('PATCH')
                                                 <button type="submit" 
                                                         title="Terima Pendaftaran"
-                                                        onclick="return confirm('Konfirmasi terima pendaftaran {{ $reg->nama }} dan daftarkan sebagai member?')"
+                                                        data-confirm="Konfirmasi terima pendaftaran {{ $reg->nama }} dan daftarkan sebagai member?"
+                                                        onclick="return confirm(this.dataset.confirm)"
                                                         class="rounded-lg bg-emerald-600 px-2.5 py-1.5 text-xs font-bold text-white hover:bg-emerald-700 transition-colors">
                                                     Terima
                                                 </button>
@@ -236,7 +242,8 @@
                                                 @method('PATCH')
                                                 <button type="submit" 
                                                         title="Tolak Pendaftaran"
-                                                        onclick="return confirm('Tolak pendaftaran {{ $reg->nama }}?')"
+                                                        data-confirm="Tolak pendaftaran {{ $reg->nama }}?"
+                                                        onclick="return confirm(this.dataset.confirm)"
                                                         class="rounded-lg border border-mfc-line px-2.5 py-1.5 text-xs font-bold text-rose-600 hover:bg-rose-50 transition-colors">
                                                     Tolak
                                                 </button>
@@ -244,7 +251,10 @@
                                         @endif
 
                                         <button type="button" 
-                                                onclick="openDeleteModal('{{ route('admin.registrations.destroy', $reg) }}', '{{ addslashes($reg->nama) }}', 'pendaftaran')"
+                                                data-action="{{ route('admin.registrations.destroy', $reg) }}"
+                                                data-name="{{ $reg->nama }}"
+                                                data-type="pendaftaran"
+                                                onclick="openDeleteModal(this.dataset.action, this.dataset.name, this.dataset.type)"
                                                 title="Hapus data pendaftaran"
                                                 class="rounded-lg border border-rose-200 bg-rose-50/60 px-2.5 py-1.5 text-xs font-bold text-rose-600 hover:bg-rose-100 transition-colors inline-flex items-center gap-1">
                                             <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">

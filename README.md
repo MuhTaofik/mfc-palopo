@@ -97,7 +97,7 @@ Kebutuhan: Laragon (PHP 8.3, MySQL), Composer, Node.js, Git.
    ```
    *Data awal yang di-seed:*
    - **Paket Gym**: Paket Harian (Rp15.000) dan Paket Bulanan (Rp100.000).
-   - **Akun Admin Uji**: Username `admin`, Password `admin123`.
+   - **Akun Admin**: Dibuat berdasarkan konfigurasi `ADMIN_DEFAULT_USER` dan `ADMIN_DEFAULT_PASSWORD` pada file `.env` (password acak aman jika tidak disetel). Password juga dapat disetel melalui perintah CLI `php artisan admin:reset-password <username>`.
 
 8. Jalankan website dan compiler aset:
    ```
