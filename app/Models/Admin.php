@@ -11,7 +11,7 @@ class Admin extends Authenticatable
 
     protected $fillable = ['username', 'password_hash'];
 
-    protected $hidden = ['password_hash'];
+    protected $hidden = ['password_hash', 'remember_token'];
 
     /**
      * Laravel biasanya membaca kolom "password".

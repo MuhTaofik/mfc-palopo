@@ -24,7 +24,9 @@ Route::get('/kontak', [PublicController::class, 'kontak'])->name('kontak');
 |--------------------------------------------------------------------------
 */
 Route::get('/pendaftaran', [RegistrationController::class, 'create'])->name('pendaftaran');
-Route::post('/pendaftaran', [RegistrationController::class, 'store'])->name('pendaftaran.store');
+Route::post('/pendaftaran', [RegistrationController::class, 'store'])
+    ->name('pendaftaran.store')
+    ->middleware('throttle:pendaftaran');
 Route::get('/cek-status', [RegistrationController::class, 'showCheckStatus'])->name('cek-status');
 Route::post('/cek-status', [RegistrationController::class, 'checkStatus'])
     ->name('cek-status.check')

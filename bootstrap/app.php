@@ -13,6 +13,14 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->redirectGuestsTo(fn (Request $request) => route('admin.login'));
+
+        // Middleware Keamanan Header Respon HTTP Global (E7 Keamanan)
+        $middleware->web(append: [
+            \App\Http\Middleware\SecurityHeaders::class,
+        ]);
+
+        // Catatan: Konfigurasi trusted proxies dikelola di AppServiceProvider::boot()
+        // melalui config('app.trusted_proxies') agar tetap terbaca saat config:cache aktif.
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

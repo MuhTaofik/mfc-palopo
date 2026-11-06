@@ -46,6 +46,88 @@ class AdminAuthSecurityTest extends TestCase
         $this->assertAuthenticatedAs($this->admin, 'admin');
     }
 
+    public function test_admin_can_login_with_remember_me_and_cookie_is_issued(): void
+    {
+        $response = $this->post('/admin/login', [
+            'username' => 'admin_test',
+            'password' => 'CurrentPassword123',
+            'remember' => 'on',
+        ]);
+
+        $response->assertRedirect('/admin/dashboard');
+        $this->assertAuthenticatedAs($this->admin, 'admin');
+
+        // Pastikan cookie recaller remember_admin_* diterbitkan oleh Laravel
+        $recallerCookie = null;
+        foreach ($response->headers->getCookies() as $cookie) {
+            if (str_starts_with($cookie->getName(), 'remember_admin_')) {
+                $recallerCookie = $cookie;
+                break;
+            }
+        }
+
+        $this->assertNotNull($recallerCookie, 'Cookie remember_admin_* harus diterbitkan saat remember dicentang.');
+
+        // Pastikan kolom remember_token di database terisi
+        $this->admin->refresh();
+        $this->assertNotNull($this->admin->remember_token);
+        $this->assertNotEmpty($this->admin->remember_token);
+    }
+
+    public function test_admin_remains_authenticated_via_remember_cookie_after_session_expires(): void
+    {
+        // 1. Login dengan mencentang remember me
+        $loginResponse = $this->post('/admin/login', [
+            'username' => 'admin_test',
+            'password' => 'CurrentPassword123',
+            'remember' => 'on',
+        ]);
+
+        $loginResponse->assertRedirect('/admin/dashboard');
+
+        // Ambil cookie remember_admin_* yang diterbitkan
+        $rememberCookie = null;
+        foreach ($loginResponse->headers->getCookies() as $cookie) {
+            if (str_starts_with($cookie->getName(), 'remember_admin_')) {
+                $rememberCookie = $cookie;
+                break;
+            }
+        }
+
+        $this->assertNotNull($rememberCookie);
+
+        // 2. Simulasikan browser ditutup dan dibuka kembali dengan mengosongkan session ID
+        $this->flushSession();
+
+        // 3. Request ke dashboard hanya berbekal cookie remember_admin_*
+        $response = $this->withCookie($rememberCookie->getName(), $rememberCookie->getValue())
+            ->get('/admin/dashboard');
+
+        // Admin harus tetap otomatis terautentikasi dan mendapatkan respons 200 OK
+        $response->assertStatus(200);
+        $this->assertAuthenticatedAs($this->admin, 'admin');
+    }
+
+    public function test_admin_login_without_remember_does_not_issue_remember_cookie(): void
+    {
+        $response = $this->post('/admin/login', [
+            'username' => 'admin_test',
+            'password' => 'CurrentPassword123',
+        ]);
+
+        $response->assertRedirect('/admin/dashboard');
+
+        $recallerCookie = null;
+        foreach ($response->headers->getCookies() as $cookie) {
+            if (str_starts_with($cookie->getName(), 'remember_admin_')) {
+                $recallerCookie = $cookie;
+                break;
+            }
+        }
+
+        $this->assertNull($recallerCookie, 'Cookie remember_admin_* tidak boleh diterbitkan jika remember tidak dicentang.');
+    }
+
     public function test_login_rate_limiting_blocks_after_five_failed_attempts(): void
     {
         for ($i = 1; $i <= 5; $i++) {

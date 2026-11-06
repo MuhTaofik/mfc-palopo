@@ -123,4 +123,16 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Trusted Proxies (E6 — Keamanan)
+    |--------------------------------------------------------------------------
+    |
+    | Daftar alamat IP atau subnet CIDR reverse proxy yang dipercayai oleh
+    | aplikasi. Dibaca melalui config() agar tetap berfungsi saat config:cache aktif.
+    |
+    */
+
+    'trusted_proxies' => env('TRUSTED_PROXIES'),
+
 ];

@@ -119,3 +119,48 @@ Kebutuhan: Laragon (PHP 8.3, MySQL), Composer, Node.js, Git.
    - Dashboard ringkasan pendaftaran dan anggota.
    - Manajemen verifikasi pendaftaran (Terima / Tolak). Saat disetujui, otomatis membuat data anggota baru di tabel `members`.
    - Manajemen member (Pencarian, filter aktif/nonaktif, dan fitur perpanjang masa aktif membership).
+
+## Panduan Deployment & Hardening Produksi (E6)
+
+Gunakan panduan dan checklist berikut saat mempublikasikan aplikasi ke server hosting atau VPS:
+
+### 1. Checklist Konfigurasi Environment (`.env`)
+- [ ] Atur `APP_ENV=production` dan `APP_DEBUG=false` untuk mencegah kebocoran informasi (*information disclosure*).
+- [ ] Atur `APP_URL=https://nama-domain-anda.com` dengan protokol HTTPS.
+- [ ] Buat kunci aplikasi satu kali pada saat instalasi awal:
+  ```bash
+  php artisan key:generate
+  ```
+  > ⚠️ **PERINGATAN KRITIS (`APP_KEY`)**: Sekali aplikasi live dan menyimpan data pendaftaran, **DILARANG KERAS** menjalankan ulang `php artisan key:generate`. Kunci ini digunakan oleh fitur **E1** untuk menghasilkan hash deterministik kode pendaftaran (`kode_hash`). Mengubah `APP_KEY` akan merusak verifikasi status seluruh member yang sudah terdaftar.
+
+### 2. Keamanan Database (Gunakan User Non-Root)
+- [ ] **Jangan gunakan user `root` tanpa password**. Buat user MySQL khusus (*least privilege*) dengan hak akses terbatas hanya pada database `mfc_palopo`:
+  ```sql
+  CREATE USER 'mfc_user'@'localhost' IDENTIFIED BY 'Password_Sangat_Kuat_Dan_Unik!';
+  GRANT ALL PRIVILEGES ON mfc_palopo.* TO 'mfc_user'@'localhost';
+  FLUSH PRIVILEGES;
+  ```
+- [ ] Perbarui `DB_USERNAME` dan `DB_PASSWORD` pada file `.env` dengan kredensial user tersebut.
+
+### 3. Keamanan Sesi & SSL / HTTPS
+- [ ] Cookie sesi secara otomatis diberi flag `Secure` saat `APP_ENV=production` (HTTPS). Pada lingkungan lokal/Laragon (`APP_ENV=local`), flag `Secure` otomatis dinonaktifkan agar pengujian HTTP lokal tetap lancar. Variabel `SESSION_SECURE_COOKIE` pada `.env` sengaja dikomentari agar fallback otomatis ini tidak tertimpa.
+- [ ] Jika aplikasi berada di balik reverse proxy (misal: Cloudflare, Nginx, Load Balancer), cantumkan IP proxy pada variabel `TRUSTED_PROXIES` di `.env`. Konfigurasi ini terbaca melalui `config('app.trusted_proxies')` sehingga tetap berfungsi penuh saat `php artisan config:cache` aktif di lingkungan hosting.
+
+### 4. Kredensial Awal Pengelola Admin (E3)
+- [ ] Sebelum menjalankan `php artisan db:seed`, tentukan akun dan kata sandi admin yang kuat di `.env`:
+  ```dotenv
+  ADMIN_DEFAULT_USER=pengelola_mfc
+  ADMIN_DEFAULT_PASSWORD=Kata_Sandi_Admin_Kuat_16_Karakter!
+  ```
+- [ ] Kata sandi admin juga dapat diatur ulang sewaktu-waktu melalui CLI:
+  ```bash
+  php artisan admin:reset-password <username>
+  ```
+
+### 5. Optimasi Performa & Cache Produksi
+Jalankan perintah cache berikut pada server produksi agar performa responsif dan efisien:
+```bash
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```

@@ -142,6 +142,15 @@
                         <span class="font-bold text-[#111111] text-right">{{ $registration->package->nama_paket ?? '-' }}</span>
                     </div>
                     <div class="flex items-center justify-between gap-2 border-t border-neutral-200/60 pt-2.5 sm:pt-3">
+                        <span class="text-neutral-500">Total Biaya</span>
+                        <div class="text-right">
+                            <span class="font-bold text-[#111111]">Rp {{ number_format($registration->total_biaya, 0, ',', '.') }}</span>
+                            @if($registration->biaya_pendaftaran_awal > 0)
+                                <span class="block text-[11px] text-neutral-500 font-normal">(Termasuk Biaya Daftar Rp {{ number_format($registration->biaya_pendaftaran_awal, 0, ',', '.') }})</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between gap-2 border-t border-neutral-200/60 pt-2.5 sm:pt-3">
                         <span class="text-neutral-500">Jenis Pendaftaran</span>
                         <span class="font-bold text-[#111111] text-right">{{ $registration->jenis_pendaftaran }}</span>
                     </div>

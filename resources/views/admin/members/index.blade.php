@@ -54,7 +54,7 @@
             <div class="divide-y divide-mfc-line md:hidden">
                 @forelse($members as $mbr)
                     @php
-                        $isExpired = $mbr->tanggal_berakhir && $mbr->tanggal_berakhir->isPast();
+                        $isExpired = $mbr->is_expired;
                     @endphp
                     <div class="p-4 sm:p-5 space-y-3">
                         <div class="flex items-start justify-between gap-2">
@@ -64,17 +64,21 @@
                                 <p class="text-xs text-mfc-mute">{{ $mbr->kontak }}</p>
                             </div>
                             <div>
-                                @if($mbr->status === 'Aktif' && !$isExpired)
-                                    <span class="inline-flex rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 text-[11px] font-bold text-emerald-800">
-                                        Aktif
+                                @if($mbr->status === 'Nonaktif')
+                                    <span class="inline-flex rounded-full bg-neutral-100 border border-neutral-300 px-2.5 py-0.5 text-[11px] font-bold text-neutral-600">
+                                        Nonaktif
                                     </span>
-                                @elseif($mbr->status === 'Aktif' && $isExpired)
+                                @elseif($mbr->is_not_started)
+                                    <span class="inline-flex rounded-full bg-blue-50 border border-blue-200 px-2.5 py-0.5 text-[11px] font-bold text-blue-800">
+                                        Belum Dimulai
+                                    </span>
+                                @elseif($mbr->is_expired)
                                     <span class="inline-flex rounded-full bg-amber-50 border border-amber-200 px-2.5 py-0.5 text-[11px] font-bold text-amber-800">
                                         Kedaluwarsa
                                     </span>
                                 @else
-                                    <span class="inline-flex rounded-full bg-neutral-100 border border-neutral-300 px-2.5 py-0.5 text-[11px] font-bold text-neutral-600">
-                                        Nonaktif
+                                    <span class="inline-flex rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 text-[11px] font-bold text-emerald-800">
+                                        Aktif
                                     </span>
                                 @endif
                             </div>
@@ -97,11 +101,15 @@
                                     </span>
                                 </div>
                                 <div class="text-right">
-                                    @if($isExpired)
+                                    @if($mbr->is_not_started)
+                                        <span class="text-[10px] text-blue-600 font-semibold block">
+                                            Mulai {{ $mbr->tanggal_daftar ? $mbr->tanggal_daftar->translatedFormat('d M Y') : '-' }}
+                                        </span>
+                                    @elseif($mbr->is_expired)
                                         <span class="text-[10px] text-rose-500 font-semibold block">Sudah Berakhir</span>
                                     @else
                                         <span class="text-[10px] text-emerald-600 font-semibold block">
-                                            Sisa {{ now()->diffInDays($mbr->tanggal_berakhir, false) + 1 }} hari
+                                            Sisa {{ $mbr->sisa_hari }} hari
                                         </span>
                                     @endif
                                 </div>
@@ -168,7 +176,7 @@
                     <tbody class="divide-y divide-mfc-line">
                         @forelse($members as $mbr)
                             @php
-                                $isExpired = $mbr->tanggal_berakhir && $mbr->tanggal_berakhir->isPast();
+                                $isExpired = $mbr->is_expired;
                             @endphp
                             <tr class="hover:bg-mfc-page/50 transition-colors">
                                 <td class="px-6 py-4 text-xs font-bold text-mfc-dark">
@@ -195,26 +203,34 @@
                                     <div class="font-bold {{ $isExpired ? 'text-rose-600' : 'text-mfc-black' }}">
                                         {{ $mbr->tanggal_berakhir ? $mbr->tanggal_berakhir->translatedFormat('d M Y') : '-' }}
                                     </div>
-                                    @if($isExpired)
+                                    @if($mbr->is_not_started)
+                                        <span class="text-[10px] text-blue-600 font-semibold block">
+                                            Mulai {{ $mbr->tanggal_daftar ? $mbr->tanggal_daftar->translatedFormat('d M Y') : '-' }}
+                                        </span>
+                                    @elseif($mbr->is_expired)
                                         <span class="text-[10px] text-rose-500 font-semibold block">Sudah Berakhir</span>
                                     @else
                                         <span class="text-[10px] text-emerald-600 font-semibold block">
-                                            Sisa {{ now()->diffInDays($mbr->tanggal_berakhir, false) + 1 }} hari
+                                            Sisa {{ $mbr->sisa_hari }} hari
                                         </span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4">
-                                    @if($mbr->status === 'Aktif' && !$isExpired)
-                                        <span class="inline-flex rounded-full bg-emerald-50 border border-emerald-200 px-3 py-0.5 text-xs font-bold text-emerald-800">
-                                            Aktif
+                                    @if($mbr->status === 'Nonaktif')
+                                        <span class="inline-flex rounded-full bg-neutral-100 border border-neutral-300 px-3 py-0.5 text-xs font-bold text-neutral-600">
+                                            Nonaktif
                                         </span>
-                                    @elseif($mbr->status === 'Aktif' && $isExpired)
+                                    @elseif($mbr->is_not_started)
+                                        <span class="inline-flex rounded-full bg-blue-50 border border-blue-200 px-3 py-0.5 text-xs font-bold text-blue-800">
+                                            Belum Dimulai
+                                        </span>
+                                    @elseif($mbr->is_expired)
                                         <span class="inline-flex rounded-full bg-amber-50 border border-amber-200 px-3 py-0.5 text-xs font-bold text-amber-800">
                                             Kedaluwarsa
                                         </span>
                                     @else
-                                        <span class="inline-flex rounded-full bg-neutral-100 border border-neutral-300 px-3 py-0.5 text-xs font-bold text-neutral-600">
-                                            Nonaktif
+                                        <span class="inline-flex rounded-full bg-emerald-50 border border-emerald-200 px-3 py-0.5 text-xs font-bold text-emerald-800">
+                                            Aktif
                                         </span>
                                     @endif
                                 </td>

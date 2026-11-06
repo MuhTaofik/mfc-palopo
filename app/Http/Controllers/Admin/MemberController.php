@@ -51,12 +51,13 @@ class MemberController extends Controller
         $tambahHari = $package ? $package->durasi_hari : 30;
 
         // Jika member masih aktif dan tanggal berakhir belum lewat, perpanjang dari tanggal berakhir tersebut
-        $currentEnd = Carbon::parse($member->tanggal_berakhir);
-        if ($currentEnd->isFuture()) {
-            $newEnd = $currentEnd->addDays($tambahHari);
+        $currentEnd = Carbon::parse($member->tanggal_berakhir)->startOfDay();
+        $today = Carbon::today();
+        if ($currentEnd->greaterThanOrEqualTo($today)) {
+            $newEnd = $currentEnd->copy()->addDays($tambahHari);
         } else {
             // Jika sudah kedaluwarsa, mulai perpanjangan dari hari ini
-            $newEnd = Carbon::today()->addDays($tambahHari);
+            $newEnd = $today->copy()->addDays($tambahHari);
         }
 
         $member->update([

@@ -67,9 +67,15 @@
                                 <span class="text-neutral-400 text-[10px] uppercase shrink-0">Alamat</span>
                                 <span class="text-right text-mfc-dark">{{ $reg->alamat }}</span>
                             </div>
-                            <div class="flex items-center justify-between border-t border-neutral-200/50 pt-1.5">
-                                <span class="text-neutral-400 text-[10px] uppercase">Paket</span>
-                                <span class="font-bold text-mfc-black">{{ $reg->package->nama_paket ?? '-' }} (Rp {{ number_format($reg->package->harga ?? 0, 0, ',', '.') }})</span>
+                            <div class="flex items-start justify-between border-t border-neutral-200/50 pt-1.5 gap-2">
+                                <span class="text-neutral-400 text-[10px] uppercase shrink-0 mt-0.5">Paket & Total</span>
+                                <div class="text-right">
+                                    <span class="font-bold text-mfc-black">{{ $reg->package->nama_paket ?? '-' }}</span>
+                                    <span class="font-bold text-mfc-black"> &bull; Rp {{ number_format($reg->total_biaya, 0, ',', '.') }}</span>
+                                    @if($reg->biaya_pendaftaran_awal > 0)
+                                        <span class="block text-[10px] text-mfc-mute">(Paket Rp {{ number_format($reg->package->harga ?? 0, 0, ',', '.') }} + Daftar Rp {{ number_format($reg->biaya_pendaftaran_awal, 0, ',', '.') }})</span>
+                                    @endif
+                                </div>
                             </div>
                             <div class="flex items-center justify-between">
                                 <span class="text-neutral-400 text-[10px] uppercase">Rencana Mulai</span>
@@ -173,7 +179,14 @@
                                     <span class="rounded-lg bg-mfc-field px-2.5 py-1 text-xs font-bold text-mfc-black">
                                         {{ $reg->package->nama_paket ?? '-' }}
                                     </span>
-                                    <span class="block text-xs text-mfc-mute mt-1">Rp {{ number_format($reg->package->harga ?? 0, 0, ',', '.') }}</span>
+                                    <span class="block text-xs font-bold text-mfc-black mt-1">
+                                        Rp {{ number_format($reg->total_biaya, 0, ',', '.') }}
+                                    </span>
+                                    @if($reg->biaya_pendaftaran_awal > 0)
+                                        <span class="block text-[10px] text-mfc-mute mt-0.5">
+                                            Termasuk Biaya Daftar Rp {{ number_format($reg->biaya_pendaftaran_awal, 0, ',', '.') }}
+                                        </span>
+                                    @endif
                                 </td>
                                 <td class="px-6 py-4 text-xs font-medium text-mfc-dark">
                                     {{ $reg->tanggal_mulai ? $reg->tanggal_mulai->translatedFormat('d M Y') : '-' }}

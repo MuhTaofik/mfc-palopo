@@ -26,6 +26,8 @@ class AdminXssSecurityTest extends TestCase
     {
         parent::setUp();
 
+        $this->withoutMiddleware(\Illuminate\Routing\Middleware\ThrottleRequests::class);
+
         // Seed data dasar paket gym
         $this->packageHarian = Package::create([
             'nama_paket'         => 'Paket Harian',

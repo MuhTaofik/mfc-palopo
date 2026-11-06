@@ -21,8 +21,18 @@
 
         <!-- Formulir Card Putih Tengah -->
         <div class="rounded-2xl sm:rounded-3xl bg-white p-5 sm:p-8 lg:p-10 shadow-sm border border-neutral-200/60">
-            <form action="{{ route('pendaftaran.store') }}" method="POST" class="space-y-5 sm:space-y-6">
+            <form action="{{ route('pendaftaran.store') }}" method="POST" id="form-pendaftaran" class="space-y-5 sm:space-y-6">
                 @csrf
+
+                <!-- Anti-Bot Honeypot Field (E5 Keamanan) -->
+                <div style="position: absolute; left: -9999px; opacity: 0; pointer-events: none;" aria-hidden="true">
+                    <label for="_hp_website">Website</label>
+                    <input type="text" id="_hp_website" name="_hp_website" tabindex="-1" autocomplete="off" value="">
+                </div>
+
+                <!-- Token Waktu Pengisian Minimal 3 Detik (E5 Keamanan) -->
+                <input type="hidden" name="_form_time" value="{{ $formTime ?? time() }}">
+                <input type="hidden" name="_form_token" value="{{ $formToken ?? hash_hmac('sha256', (string) ($formTime ?? time()), (string) config('app.key')) }}">
 
                 <!-- Nama Lengkap -->
                 <div>
@@ -61,7 +71,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                             </svg>
                         </div>
-                        <input type="tel" id="kontak" name="kontak" value="{{ old('kontak') }}" required inputmode="numeric"
+                        <input type="tel" id="kontak" name="kontak" value="{{ old('kontak') }}" required inputmode="numeric" maxlength="20"
                                placeholder="Contoh: 081234567890"
                                class="w-full rounded-xl sm:rounded-2xl bg-neutral-100/80 border-0 pl-11 pr-4 py-3 sm:py-3.5 text-base sm:text-sm text-[#111111] placeholder-neutral-400 focus:bg-white focus:ring-2 focus:ring-black outline-none transition-all min-h-[46px]">
                     </div>
@@ -82,7 +92,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                             </svg>
                         </div>
-                        <input type="text" id="alamat" name="alamat" value="{{ old('alamat') }}" required
+                        <input type="text" id="alamat" name="alamat" value="{{ old('alamat') }}" required maxlength="300"
                                placeholder="Masukkan alamat lengkap tempat tinggal"
                                class="w-full rounded-xl sm:rounded-2xl bg-neutral-100/80 border-0 pl-11 pr-4 py-3 sm:py-3.5 text-base sm:text-sm text-[#111111] placeholder-neutral-400 focus:bg-white focus:ring-2 focus:ring-black outline-none transition-all min-h-[46px]">
                     </div>
@@ -102,7 +112,7 @@
                             <input type="radio" name="jenis_pendaftaran" value="Member Baru" class="sr-only" 
                                    {{ old('jenis_pendaftaran', 'Member Baru') === 'Member Baru' ? 'checked' : '' }}
                                    onchange="updateJenisUI(this.value)">
-                            <span id="label-baru">Member Baru &bull; Rp125.000/bln</span>
+                            <span id="label-baru">Member Baru</span>
                         </label>
 
                         <label class="relative flex items-center justify-center rounded-xl sm:rounded-2xl py-3 px-4 cursor-pointer text-xs font-bold transition-all border border-transparent min-h-[44px] text-center"
@@ -110,7 +120,7 @@
                             <input type="radio" name="jenis_pendaftaran" value="Perpanjangan" class="sr-only"
                                    {{ old('jenis_pendaftaran') === 'Perpanjangan' ? 'checked' : '' }}
                                    onchange="updateJenisUI(this.value)">
-                            <span id="label-perpanjangan">Perpanjangan &bull; Rp100.000/bln</span>
+                            <span id="label-perpanjangan">Perpanjangan</span>
                         </label>
                     </div>
                 </div>
@@ -185,11 +195,46 @@
                         </div>
                         <input type="date" id="tanggal_mulai" name="tanggal_mulai" 
                                value="{{ old('tanggal_mulai', date('Y-m-d')) }}" required
+                               min="{{ date('Y-m-d') }}" max="{{ date('Y-m-d', strtotime('+60 days')) }}"
                                class="w-full rounded-xl sm:rounded-2xl bg-neutral-100/80 border-0 pl-11 pr-4 py-3 sm:py-3.5 text-base sm:text-sm text-[#111111] focus:bg-white focus:ring-2 focus:ring-black outline-none transition-all min-h-[46px]">
                     </div>
                     @error('tanggal_mulai')
                         <p class="mt-1 text-xs text-rose-600 font-semibold">{{ $message }}</p>
                     @enderror
+                </div>
+
+                <!-- Ringkasan Biaya Transparan Sesuai Pilihan -->
+                <div class="rounded-xl sm:rounded-2xl bg-neutral-100/90 p-4 sm:p-5 border border-neutral-200/70 space-y-3" id="ringkasan-biaya-container">
+                    <div class="flex items-center justify-between pb-2.5 border-b border-neutral-200/80">
+                        <span class="text-xs font-bold uppercase tracking-wider text-neutral-500">Ringkasan Biaya</span>
+                        <span class="text-xs font-bold text-[#111111]" id="ringkasan-jenis">Member Baru</span>
+                    </div>
+
+                    <div class="space-y-2 text-xs sm:text-sm">
+                        <!-- Biaya Paket -->
+                        <div class="flex items-center justify-between">
+                            <span class="text-neutral-600" id="ringkasan-nama-paket">Paket Bulanan</span>
+                            <span class="font-semibold text-[#111111]" id="ringkasan-harga-paket">Rp 100.000</span>
+                        </div>
+
+                        <!-- Biaya Pendaftaran Awal (Hanya untuk Member Baru + Paket Bulanan) -->
+                        <div class="flex items-center justify-between text-neutral-600" id="row-biaya-pendaftaran">
+                            <div class="flex items-center gap-1.5">
+                                <span>Biaya Pendaftaran Awal</span>
+                                <span class="text-[10px] bg-neutral-200 text-neutral-700 px-1.5 py-0.5 rounded font-semibold">Khusus Member Baru</span>
+                            </div>
+                            <span class="font-semibold text-[#111111]">Rp 25.000</span>
+                        </div>
+                    </div>
+
+                    <!-- Total Pembayaran -->
+                    <div class="pt-2.5 border-t border-neutral-200/80 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs sm:text-sm font-bold text-[#111111] block">Total Pembayaran</span>
+                            <span class="text-[11px] text-neutral-500" id="ringkasan-keterangan">Termasuk biaya pendaftaran awal</span>
+                        </div>
+                        <span class="text-base sm:text-xl font-black text-[#111111]" id="ringkasan-total">Rp 125.000</span>
+                    </div>
                 </div>
 
                 <!-- Tombol Submit -->
@@ -209,6 +254,77 @@
 </div>
 
 <script>
+    const packagesData = {
+        @foreach($packages as $pkg)
+            {{ $pkg->id_package }}: {
+                nama: "{{ $pkg->nama_paket }}",
+                harga: {{ (int) $pkg->harga }},
+                isBulanan: {{ str_contains(strtolower($pkg->nama_paket), 'bulanan') || (int) $pkg->durasi_hari >= 30 ? 'true' : 'false' }}
+            },
+        @endforeach
+    };
+
+    function formatRupiah(num) {
+        return 'Rp ' + Number(num).toLocaleString('id-ID');
+    }
+
+    function getSelectedJenis() {
+        const checked = document.querySelector('input[name="jenis_pendaftaran"]:checked');
+        return checked ? checked.value : 'Member Baru';
+    }
+
+    function getSelectedPackageId() {
+        const checked = document.querySelector('input[name="package_id"]:checked');
+        return checked ? parseInt(checked.value, 10) : parseInt(Object.keys(packagesData)[0], 10);
+    }
+
+    function updateRingkasanBiaya() {
+        const jenis = getSelectedJenis();
+        const pkgId = getSelectedPackageId();
+        const pkg = packagesData[pkgId];
+        if (!pkg) return;
+
+        const isMemberBaru = (jenis === 'Member Baru');
+        const isBulanan = pkg.isBulanan;
+        const biayaAdmin = (isMemberBaru && isBulanan) ? 25000 : 0;
+        const total = pkg.harga + biayaAdmin;
+
+        const jenisEl = document.getElementById('ringkasan-jenis');
+        if (jenisEl) jenisEl.textContent = jenis;
+
+        const namaPaketEl = document.getElementById('ringkasan-nama-paket');
+        if (namaPaketEl) namaPaketEl.textContent = pkg.nama;
+
+        const hargaPaketEl = document.getElementById('ringkasan-harga-paket');
+        if (hargaPaketEl) hargaPaketEl.textContent = formatRupiah(pkg.harga);
+
+        const rowBiayaAdmin = document.getElementById('row-biaya-pendaftaran');
+        const ketEl = document.getElementById('ringkasan-keterangan');
+
+        if (biayaAdmin > 0) {
+            if (rowBiayaAdmin) {
+                rowBiayaAdmin.classList.remove('hidden');
+                rowBiayaAdmin.classList.add('flex');
+            }
+            if (ketEl) ketEl.textContent = 'Termasuk biaya pendaftaran awal Rp 25.000';
+        } else {
+            if (rowBiayaAdmin) {
+                rowBiayaAdmin.classList.remove('flex');
+                rowBiayaAdmin.classList.add('hidden');
+            }
+            if (ketEl) {
+                if (jenis === 'Perpanjangan') {
+                    ketEl.textContent = 'Bebas biaya pendaftaran awal (Perpanjangan)';
+                } else {
+                    ketEl.textContent = 'Tanpa biaya pendaftaran tambahan';
+                }
+            }
+        }
+
+        const totalEl = document.getElementById('ringkasan-total');
+        if (totalEl) totalEl.textContent = formatRupiah(total);
+    }
+
     function selectPackage(id) {
         document.querySelectorAll('.package-card').forEach(card => {
             const radio = card.querySelector('input[type="radio"]');
@@ -232,6 +348,8 @@
                 check.classList.remove('block');
             }
         });
+
+        updateRingkasanBiaya();
     }
 
     function updateJenisUI(val) {
@@ -246,11 +364,37 @@
                 l.classList.add('bg-neutral-100', 'text-[#111111]');
             }
         });
+
+        updateRingkasanBiaya();
     }
 
     document.addEventListener('DOMContentLoaded', function() {
         const checkedJenis = document.querySelector('input[name="jenis_pendaftaran"]:checked');
         if (checkedJenis) updateJenisUI(checkedJenis.value);
+
+        updateRingkasanBiaya();
+
+        const form = document.getElementById('form-pendaftaran');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                const submitBtn = form.querySelector('button[type="submit"]');
+                if (submitBtn) {
+                    if (submitBtn.disabled) {
+                        e.preventDefault();
+                        return false;
+                    }
+                    submitBtn.disabled = true;
+                    submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+                    submitBtn.innerHTML = `
+                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline-block" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                        </svg>
+                        Memproses Pendaftaran...
+                    `;
+                }
+            });
+        }
     });
 </script>
 @endsection

@@ -46,6 +46,67 @@ class Registration extends Model
         return $this->hasOne(Member::class, 'registration_id', 'id_registration');
     }
 
+    public const BIAYA_PENDAFTARAN_AWAL = 25000;
+
+    /**
+     * Hitung rincian biaya pendaftaran secara deterministik di server.
+     * Aturan:
+     * 1. Member Baru + Paket Harian = Rp15.000 (tanpa biaya pendaftaran awal).
+     * 2. Member Baru + Paket Bulanan = Rp125.000 (Rp25.000 biaya awal + Rp100.000 paket).
+     * 3. Perpanjangan + Paket Harian = Rp15.000 (tanpa biaya tambahan).
+     * 4. Perpanjangan + Paket Bulanan = Rp100.000 (tanpa biaya tambahan).
+     *
+     * @param Package|int|null $package
+     * @param string $jenis 'Member Baru' | 'Perpanjangan'
+     * @return array{harga_paket: int, biaya_admin: int, total: int}
+     */
+    public static function hitungBiaya($package, string $jenis): array
+    {
+        if (is_numeric($package)) {
+            $package = Package::find($package);
+        }
+
+        if (! $package) {
+            return [
+                'harga_paket' => 0,
+                'biaya_admin' => 0,
+                'total'       => 0,
+            ];
+        }
+
+        $hargaPaket = (int) $package->harga;
+        $isBulanan = str_contains(strtolower($package->nama_paket), 'bulanan') || (int) $package->durasi_hari >= 30;
+
+        // Biaya pendaftaran awal Rp25.000 hanya dikenakan untuk Member Baru pada Paket Bulanan
+        $biayaAdmin = ($jenis === 'Member Baru' && $isBulanan) ? self::BIAYA_PENDAFTARAN_AWAL : 0;
+
+        return [
+            'harga_paket' => $hargaPaket,
+            'biaya_admin' => $biayaAdmin,
+            'total'       => $hargaPaket + $biayaAdmin,
+        ];
+    }
+
+    /**
+     * Accessor: total pembayaran pendaftaran (harga paket + biaya pendaftaran awal jika berlaku).
+     */
+    protected function totalBiaya(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => static::hitungBiaya($this->package, $this->jenis_pendaftaran)['total'],
+        );
+    }
+
+    /**
+     * Accessor: rincian biaya pendaftaran awal.
+     */
+    protected function biayaPendaftaranAwal(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => static::hitungBiaya($this->package, $this->jenis_pendaftaran)['biaya_admin'],
+        );
+    }
+
     // ── Mutators / Accessors ──────────────────────────────────────
 
     /**
