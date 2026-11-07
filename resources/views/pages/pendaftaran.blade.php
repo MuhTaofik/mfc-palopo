@@ -8,13 +8,13 @@
         
         <!-- Header Judul (Sesuai Desain Figma Pendaftaran.png) -->
         <div class="text-center space-y-2">
-            <span class="inline-block rounded-full bg-neutral-200/80 px-4 py-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-neutral-700">
+            <span class="inline-block rounded-full bg-neutral-200/80 px-4 py-1 text-[11px] font-heading font-bold uppercase tracking-wider text-neutral-700">
                 &bull; MULTI FITNES CENTRE &bull;
             </span>
-            <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#111111]">
+            <h1 class="text-[34px] sm:text-[40px] lg:text-[46px] font-heading font-bold tracking-tight text-[#111111]">
                 Formulir Pendaftaran
             </h1>
-            <p class="mx-auto max-w-md text-xs sm:text-sm text-neutral-600">
+            <p class="mx-auto max-w-md text-xs sm:text-sm font-normal text-neutral-600">
                 Lengkapi data diri Anda untuk mendaftar menjadi anggota MULTI FITNES CENTRE.
             </p>
         </div>
@@ -149,7 +149,7 @@
                                 <div>
                                     <div class="flex items-start justify-between gap-2">
                                         <div>
-                                            <h4 class="font-bold text-sm sm:text-base">{{ $pkg->nama_paket }}</h4>
+                                            <h4 class="font-heading font-bold text-base sm:text-lg tracking-normal">{{ $pkg->nama_paket }}</h4>
                                             <p class="text-[11px] {{ $isSelected ? 'text-neutral-400' : 'text-neutral-500' }} mt-0.5">
                                                 {{ $isBulanan ? 'Akses Penuh 30 Hari' : 'Akses Gym 1 Hari' }}
                                             </p>
@@ -157,7 +157,7 @@
 
                                         <div class="flex items-center gap-1.5 shrink-0">
                                             @if($isBulanan)
-                                                <span class="rounded bg-neutral-800 px-1.5 sm:px-2 py-0.5 text-[8px] sm:text-[9px] font-bold uppercase tracking-wider text-white">
+                                                <span class="rounded bg-orange-600 px-1.5 sm:px-2 py-0.5 text-[8px] sm:text-[9px] font-bold uppercase tracking-wider text-white">
                                                     POPULER
                                                 </span>
                                             @endif
@@ -170,9 +170,9 @@
                                     </div>
                                 </div>
 
-                                <div class="mt-4 sm:mt-6 text-sm font-bold">
+                                <div class="mt-4 sm:mt-6 text-base font-heading font-extrabold tracking-tight">
                                     Rp {{ number_format($pkg->harga, 0, ',', '.') }} 
-                                    <span class="text-[11px] font-normal {{ $isSelected ? 'text-neutral-400' : 'text-neutral-500' }}">/{{ $isBulanan ? 'bulan' : 'hari' }}</span>
+                                    <span class="text-[11px] font-sans font-normal {{ $isSelected ? 'text-neutral-400' : 'text-neutral-500' }}">/{{ $isBulanan ? 'bulan' : 'hari' }}</span>
                                 </div>
                             </label>
                         @endforeach
@@ -233,14 +233,14 @@
                             <span class="text-xs sm:text-sm font-bold text-[#111111] block">Total Pembayaran</span>
                             <span class="text-[11px] text-neutral-500" id="ringkasan-keterangan">Termasuk biaya pendaftaran awal</span>
                         </div>
-                        <span class="text-base sm:text-xl font-black text-[#111111]" id="ringkasan-total">Rp 125.000</span>
+                        <span class="text-xl sm:text-2xl font-heading font-extrabold text-[#111111]" id="ringkasan-total">Rp 125.000</span>
                     </div>
                 </div>
 
                 <!-- Tombol Submit -->
                 <div class="pt-2">
                     <button type="submit" 
-                            class="w-full inline-flex items-center justify-center min-h-[48px] rounded-xl sm:rounded-2xl bg-[#1c1d1d] py-3.5 sm:py-4 px-6 text-xs sm:text-sm font-bold text-white shadow-md hover:bg-black transition-all">
+                            class="w-full inline-flex items-center justify-center min-h-[48px] rounded-xl sm:rounded-2xl bg-orange-600 hover:bg-orange-500 py-3.5 sm:py-4 px-6 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-orange-600/30 hover:shadow-orange-600/40 transition-all">
                         Kirim Pendaftaran
                         <svg class="ml-2 h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>

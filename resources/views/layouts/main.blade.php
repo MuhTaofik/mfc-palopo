@@ -7,6 +7,11 @@
     <title>@yield('title', 'MULTI FITNES CENTRE (MFC) Palopo - Pusat Kebugaran & Gym')</title>
     <meta name="description" content="@yield('meta_description', 'MULTI FITNES CENTRE (MFC) Palopo adalah pusat kebugaran modern di Kota Palopo dengan peralatan lengkap, suasana nyaman, dan harga paket latihan terjangkau.')">
     
+    <!-- Google Fonts: Barlow Condensed (Sporty, Condensed Heading Font) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+
     <!-- Vite Assets (Tailwind CSS 4, Flowbite, Inter Font) -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>

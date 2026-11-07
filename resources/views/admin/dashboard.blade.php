@@ -13,7 +13,7 @@
             <div class="rounded-2xl sm:rounded-3xl border border-mfc-line bg-white p-5 sm:p-6 shadow-xs flex items-center justify-between">
                 <div>
                     <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-amber-700">Menunggu Verifikasi</span>
-                    <p class="text-2xl sm:text-3xl font-black text-mfc-black mt-1">{{ $stats['pending_registrations'] }}</p>
+                    <p class="text-3xl sm:text-4xl font-heading font-extrabold text-mfc-black mt-1 tracking-tight">{{ $stats['pending_registrations'] }}</p>
                     <a href="{{ route('admin.registrations.index', ['status' => 'Menunggu']) }}" class="text-xs text-amber-700 font-semibold hover:underline mt-2 inline-block">
                         Lihat Pendaftaran &rarr;
                     </a>
@@ -29,7 +29,7 @@
             <div class="rounded-2xl sm:rounded-3xl border border-mfc-line bg-white p-5 sm:p-6 shadow-xs flex items-center justify-between">
                 <div>
                     <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-emerald-700">Member Aktif</span>
-                    <p class="text-2xl sm:text-3xl font-black text-mfc-black mt-1">{{ $stats['active_members'] }}</p>
+                    <p class="text-3xl sm:text-4xl font-heading font-extrabold text-mfc-black mt-1 tracking-tight">{{ $stats['active_members'] }}</p>
                     <a href="{{ route('admin.members.index', ['status' => 'Aktif']) }}" class="text-xs text-emerald-700 font-semibold hover:underline mt-2 inline-block">
                         Kelola Member &rarr;
                     </a>
@@ -45,7 +45,7 @@
             <div class="rounded-2xl sm:rounded-3xl border border-mfc-line bg-white p-5 sm:p-6 shadow-xs flex items-center justify-between">
                 <div>
                     <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-mfc-mute">Member Nonaktif</span>
-                    <p class="text-2xl sm:text-3xl font-black text-mfc-black mt-1">{{ $stats['inactive_members'] }}</p>
+                    <p class="text-3xl sm:text-4xl font-heading font-extrabold text-mfc-black mt-1 tracking-tight">{{ $stats['inactive_members'] }}</p>
                     <a href="{{ route('admin.members.index', ['status' => 'Nonaktif']) }}" class="text-xs text-mfc-mute font-semibold hover:underline mt-2 inline-block">
                         Lihat Data &rarr;
                     </a>
@@ -61,7 +61,7 @@
             <div class="rounded-2xl sm:rounded-3xl border border-mfc-line bg-white p-5 sm:p-6 shadow-xs flex items-center justify-between">
                 <div>
                     <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-mfc-mute">Total Registrasi</span>
-                    <p class="text-2xl sm:text-3xl font-black text-mfc-black mt-1">{{ $stats['total_registrations'] }}</p>
+                    <p class="text-3xl sm:text-4xl font-heading font-extrabold text-mfc-black mt-1 tracking-tight">{{ $stats['total_registrations'] }}</p>
                     <a href="{{ route('admin.registrations.index') }}" class="text-xs text-mfc-black font-semibold hover:underline mt-2 inline-block">
                         Semua Registrasi &rarr;
                     </a>
@@ -79,7 +79,7 @@
         <div class="rounded-2xl sm:rounded-3xl border border-mfc-line bg-white overflow-hidden shadow-xs">
             <div class="px-5 sm:px-6 py-4 sm:py-5 border-b border-mfc-line flex items-center justify-between gap-4">
                 <div>
-                    <h2 class="text-sm sm:text-base font-bold text-mfc-black">Pendaftaran Masuk Terbaru</h2>
+                    <h2 class="text-base sm:text-lg font-heading font-bold text-mfc-black tracking-normal">Pendaftaran Masuk Terbaru</h2>
                     <p class="text-[11px] sm:text-xs text-mfc-mute">Menampilkan 5 pengajuan pendaftaran gym online terakhir.</p>
                 </div>
                 <a href="{{ route('admin.registrations.index') }}" class="text-xs font-bold text-mfc-black hover:underline shrink-0">
@@ -98,15 +98,16 @@
                             </div>
                             <div>
                                 @if($reg->status_pendaftaran === 'Menunggu')
-                                    <span class="inline-flex rounded-full bg-amber-50 border border-amber-200 px-2.5 py-0.5 text-[11px] font-semibold text-amber-800">
+                                    <span class="inline-flex items-center gap-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 px-2.5 py-0.5 text-[11px] font-bold text-amber-800">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>
                                         Menunggu
                                     </span>
                                 @elseif($reg->status_pendaftaran === 'Diterima')
-                                    <span class="inline-flex rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-800">
+                                    <span class="inline-flex rounded-full bg-[#1c1d1d] px-2.5 py-0.5 text-[11px] font-bold text-white shadow-xs">
                                         Diterima
                                     </span>
                                 @else
-                                    <span class="inline-flex rounded-full bg-rose-50 border border-rose-200 px-2.5 py-0.5 text-[11px] font-semibold text-rose-800">
+                                    <span class="inline-flex rounded-full bg-neutral-100 border border-neutral-200 px-2.5 py-0.5 text-[11px] font-semibold text-neutral-600">
                                         Ditolak
                                     </span>
                                 @endif
@@ -180,14 +181,14 @@
             <!-- Desktop View: Table (>= md) -->
             <div class="hidden md:block overflow-x-auto">
                 <table class="w-full text-left text-sm">
-                    <thead class="bg-mfc-page border-b border-mfc-line text-xs uppercase tracking-wider text-mfc-mute font-bold">
+                    <thead class="bg-[#1c1d1d] text-white text-xs uppercase tracking-wider font-extrabold border-b border-neutral-800">
                         <tr>
-                            <th class="px-6 py-3.5">Nama & Kontak</th>
-                            <th class="px-6 py-3.5">Paket</th>
-                            <th class="px-6 py-3.5">Tgl Mulai</th>
-                            <th class="px-6 py-3.5">Jenis</th>
-                            <th class="px-6 py-3.5">Status</th>
-                            <th class="px-6 py-3.5 text-right">Aksi</th>
+                            <th class="px-6 py-3.5 text-white">Nama & Kontak</th>
+                            <th class="px-6 py-3.5 text-white">Paket</th>
+                            <th class="px-6 py-3.5 text-white">Tgl Mulai</th>
+                            <th class="px-6 py-3.5 text-white">Jenis</th>
+                            <th class="px-6 py-3.5 text-white">Status</th>
+                            <th class="px-6 py-3.5 text-right text-white">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-mfc-line">
@@ -210,15 +211,16 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     @if($reg->status_pendaftaran === 'Menunggu')
-                                        <span class="inline-flex rounded-full bg-amber-50 border border-amber-200 px-2.5 py-0.5 text-xs font-semibold text-amber-800">
+                                        <span class="inline-flex items-center gap-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 px-2.5 py-0.5 text-xs font-bold text-amber-800">
+                                            <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>
                                             Menunggu
                                         </span>
                                     @elseif($reg->status_pendaftaran === 'Diterima')
-                                        <span class="inline-flex rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 text-xs font-semibold text-emerald-800">
+                                        <span class="inline-flex rounded-full bg-[#1c1d1d] px-2.5 py-0.5 text-xs font-bold text-white shadow-xs">
                                             Diterima
                                         </span>
                                     @else
-                                        <span class="inline-flex rounded-full bg-rose-50 border border-rose-200 px-2.5 py-0.5 text-xs font-semibold text-rose-800">
+                                        <span class="inline-flex rounded-full bg-neutral-100 border border-neutral-200 px-2.5 py-0.5 text-xs font-semibold text-neutral-600">
                                             Ditolak
                                         </span>
                                     @endif

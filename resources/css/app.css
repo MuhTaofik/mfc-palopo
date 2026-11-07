@@ -10,6 +10,7 @@
 @theme {
     --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-heading: 'Barlow Condensed', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
 
     /* Warna dari desain Figma (frame gym) */
     --color-mfc-black: #060607;

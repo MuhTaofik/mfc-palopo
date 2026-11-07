@@ -8,13 +8,13 @@
         
         <!-- Header Judul (Sesuai Desain Figma Konfirmasi Pendaftaran.png) -->
         <div class="text-center space-y-2">
-            <span class="inline-block rounded-full bg-neutral-200/80 px-4 py-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-neutral-700">
+            <span class="inline-block rounded-full bg-neutral-200/80 px-4 py-1 text-[11px] font-heading font-bold uppercase tracking-wider text-neutral-700">
                 &bull; MULTI FITNES CENTRE &bull;
             </span>
-            <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#111111]">
+            <h1 class="text-[34px] sm:text-[40px] lg:text-[46px] font-heading font-bold tracking-tight text-[#111111]">
                 Status Pendaftaran
             </h1>
-            <p class="mx-auto max-w-md text-xs sm:text-sm text-neutral-600">
+            <p class="mx-auto max-w-md text-xs sm:text-sm font-normal text-neutral-600">
                 Pantau verifikasi dan status keanggotaan gym MULTI FITNES CENTRE Anda.
             </p>
         </div>
@@ -63,7 +63,7 @@
                                class="w-full rounded-xl sm:rounded-2xl bg-neutral-100/80 border-0 px-4 py-3 text-base sm:text-sm text-[#111111] placeholder-neutral-400 focus:bg-white focus:ring-2 focus:ring-black outline-none transition-all min-h-[46px]">
                     </div>
                     <button type="submit"
-                            class="w-full sm:w-auto inline-flex items-center justify-center min-h-[46px] rounded-xl sm:rounded-2xl bg-[#1c1d1d] px-6 py-3 text-xs sm:text-sm font-bold text-white shadow hover:bg-black transition-all">
+                            class="w-full sm:w-auto inline-flex items-center justify-center min-h-[46px] rounded-xl sm:rounded-2xl bg-orange-600 hover:bg-orange-500 px-6 py-3 text-xs sm:text-sm font-semibold text-white shadow-md shadow-orange-600/30 transition-all">
                         Cek Status
                     </button>
                 </div>
@@ -111,7 +111,7 @@
                 </div>
 
                 <div class="space-y-1.5 sm:space-y-2">
-                    <h2 class="text-lg sm:text-2xl font-black text-[#111111]">
+                    <h2 class="text-xl sm:text-2xl lg:text-[28px] font-heading font-bold text-[#111111] tracking-normal">
                         @if($registration->status_pendaftaran === 'Diterima')
                             Pendaftaran Telah Diterima!
                         @elseif($registration->status_pendaftaran === 'Ditolak')
@@ -170,7 +170,8 @@
                                     Ditolak
                                 </span>
                             @else
-                                <span class="inline-flex rounded-full bg-neutral-200 px-3 py-1 text-[11px] font-bold text-neutral-800">
+                                <span class="inline-flex items-center gap-1.5 rounded-full bg-amber-500 text-white px-3 py-1 text-[11px] font-bold shadow-xs">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-white animate-pulse"></span>
                                     Menunggu
                                 </span>
                             @endif
@@ -181,7 +182,7 @@
                 <!-- Tombol Aksi Bawah (Sesuai Figma) -->
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
                     <a href="{{ route('home') }}"
-                       class="w-full sm:w-auto inline-flex items-center justify-center min-h-[44px] rounded-xl bg-[#1c1d1d] px-6 py-3 text-xs font-bold text-white hover:bg-black transition-colors shadow">
+                       class="w-full sm:w-auto inline-flex items-center justify-center min-h-[44px] rounded-xl bg-[#1c1d1d] px-6 py-3 text-xs font-semibold text-white hover:bg-black transition-colors shadow">
                         Kembali ke Beranda
                     </a>
                     <a href="{{ route('paket') }}"

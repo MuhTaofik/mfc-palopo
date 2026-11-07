@@ -8,13 +8,13 @@
         
         <!-- Header Judul (Sesuai Desain Figma Paket & Harga.png) -->
         <div class="text-center space-y-2">
-            <span class="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-neutral-500">
+            <span class="text-xs font-heading font-bold uppercase tracking-widest text-neutral-500">
                 MULTI FITNES CENTRE
             </span>
-            <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#111111]">
-                Paket & Harga
+            <h1 class="text-[34px] sm:text-[40px] lg:text-[46px] font-heading font-bold tracking-tight text-[#111111]">
+                Paket &amp; Harga
             </h1>
-            <p class="mx-auto max-w-xl text-xs sm:text-sm text-neutral-600">
+            <p class="mx-auto max-w-xl text-xs sm:text-sm font-normal text-neutral-600">
                 Pilih paket latihan sesuai kebutuhan dan waktu Anda.
             </p>
         </div>
@@ -41,18 +41,51 @@
                             
                             <!-- Nama & Harga -->
                             <div>
-                                <h2 class="text-lg sm:text-xl font-bold text-[#111111]">{{ $pkg->nama_paket }}</h2>
-                                <div class="mt-1.5 sm:mt-2 text-2xl sm:text-3xl lg:text-4xl font-black text-[#111111]">
-                                    Rp{{ number_format($pkg->harga, 0, ',', '.') }}
+                                <div class="flex items-center justify-between gap-2">
+                                    <h2 class="text-xl sm:text-2xl font-heading font-bold text-[#111111] tracking-normal">{{ $pkg->nama_paket }}</h2>
+                                    @if($isBulanan)
+                                        <span class="rounded-full bg-orange-600 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-xs">
+                                            Populer
+                                        </span>
+                                    @endif
                                 </div>
-                                <p class="text-xs text-neutral-500 mt-1 font-medium">
-                                    {{ $isBulanan ? '1 Bulan' : '1 Hari' }}
+
+                                <div class="mt-2 flex items-baseline gap-1.5">
+                                    <span class="text-3xl sm:text-4xl lg:text-[44px] font-heading font-extrabold text-[#111111] tracking-tight">
+                                        Rp{{ number_format($pkg->harga, 0, ',', '.') }}
+                                    </span>
+                                    <span class="text-xs sm:text-sm font-semibold text-neutral-500">
+                                        / {{ $isBulanan ? 'bulan' : 'hari' }}
+                                    </span>
+                                </div>
+                                <p class="text-xs font-normal text-neutral-500 mt-1">
+                                    {{ $isBulanan ? 'Akses penuh fasilitas gym selama 30 hari' : 'Akses penuh fasilitas gym 1 hari' }}
                                 </p>
-                                @if($isBulanan)
-                                    <p class="text-xs text-neutral-500 mt-0.5 font-medium">
-                                        Perpanjangan: Rp{{ number_format($pkg->harga_perpanjangan ?? $pkg->harga, 0, ',', '.') }} / bulan
-                                    </p>
-                                @endif
+
+                                <!-- Box Rincian Aturan Harga Transparan -->
+                                <div class="mt-3.5 rounded-xl bg-neutral-50 border border-neutral-200/80 p-3 space-y-1.5 text-xs">
+                                    @if($isBulanan)
+                                        <div class="flex items-center justify-between text-neutral-700">
+                                            <span class="font-medium">Member Baru:</span>
+                                            <span class="font-bold text-[#111111]">Total Rp125.000</span>
+                                        </div>
+                                        <div class="text-[11px] text-neutral-500 -mt-0.5">
+                                            (Paket Rp100.000 + Biaya Pendaftaran Rp25.000)
+                                        </div>
+                                        <div class="flex items-center justify-between text-neutral-700 border-t border-neutral-200/80 pt-1.5 mt-1">
+                                            <span class="font-medium">Perpanjangan:</span>
+                                            <span class="font-bold text-[#111111]">Rp100.000 <span class="font-normal text-neutral-500">/ bulan</span></span>
+                                        </div>
+                                    @else
+                                        <div class="flex items-center justify-between text-neutral-700">
+                                            <span class="font-medium">Tarif Latihan Harian:</span>
+                                            <span class="font-bold text-[#111111]">Rp15.000</span>
+                                        </div>
+                                        <div class="text-[11px] text-neutral-500">
+                                            (Tanpa biaya pendaftaran tambahan)
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
 
                             <!-- Checklist Fitur -->
@@ -90,7 +123,7 @@
                         <!-- Tombol Pilih Paket -->
                         <div class="mt-6 sm:mt-8 pt-3 sm:pt-4">
                             <a href="{{ route('pendaftaran', ['paket' => $pkg->id_package]) }}" 
-                               class="flex w-full items-center justify-center min-h-[46px] rounded-xl bg-[#1c1d1d] py-3.5 text-center text-xs sm:text-sm font-bold text-white shadow-sm hover:bg-black transition-all">
+                               class="flex w-full items-center justify-center min-h-[46px] rounded-xl {{ $isBulanan ? 'bg-orange-600 hover:bg-orange-500 text-white shadow-md shadow-orange-600/25' : 'bg-[#1c1d1d] hover:bg-black text-white' }} py-3.5 text-center text-xs sm:text-sm font-semibold transition-all">
                                 Pilih Paket
                             </a>
                         </div>

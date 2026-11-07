@@ -8,13 +8,13 @@
         
         <!-- Header Judul -->
         <div class="text-center space-y-2">
-            <span class="inline-block rounded-full bg-neutral-200/80 px-4 py-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-neutral-700">
+            <span class="inline-block rounded-full bg-neutral-200/80 px-4 py-1 text-[11px] font-heading font-bold uppercase tracking-wider text-neutral-700">
                 &bull; MULTI FITNES CENTRE &bull;
             </span>
-            <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#111111]">
-                Tentang
+            <h1 class="text-[34px] sm:text-[40px] lg:text-[46px] font-heading font-bold tracking-tight text-[#111111]">
+                Tentang Kami
             </h1>
-            <p class="mx-auto max-w-2xl text-xs sm:text-sm text-neutral-600 leading-relaxed">
+            <p class="mx-auto max-w-2xl text-xs sm:text-sm font-normal text-neutral-600 leading-relaxed">
                 Mengenal lebih dekat pusat kebugaran untuk membantu Anda menjalani gaya hidup yang lebih sehat dan aktif di Kota Palopo.
             </p>
         </div>
@@ -32,13 +32,13 @@
 
                 <!-- Konten Tentang Kami -->
                 <div class="lg:col-span-7 space-y-3 sm:space-y-4">
-                    <span class="inline-block rounded-lg bg-neutral-100 px-3 py-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-neutral-600">
-                        TENTANG KAMI
+                    <span class="inline-block rounded-lg bg-neutral-100 px-3 py-1 text-[11px] font-heading font-bold uppercase tracking-wider text-neutral-600">
+                        MULTI FITNES CENTRE
                     </span>
-                    <h2 class="text-xl sm:text-2xl lg:text-3xl font-black text-[#111111] leading-tight">
+                    <h2 class="text-2xl sm:text-3xl lg:text-[34px] font-heading font-bold text-[#111111] leading-snug">
                         Tempat Berlatih untuk Hidup Lebih Bugar
                     </h2>
-                    <p class="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+                    <p class="text-xs sm:text-sm font-normal text-neutral-600 leading-relaxed">
                         MULTI FITNES CENTRE merupakan pusat kebugaran yang menyediakan fasilitas latihan untuk membantu pengunjung menjaga kebugaran dan membangun kebiasaan hidup aktif. Dengan fasilitas alat beban dan kardio, pengunjung dapat memilih latihan sesuai kebutuhan masing-masing.
                     </p>
 
@@ -86,8 +86,8 @@
                     </svg>
                 </div>
                 <div>
-                    <h3 class="text-lg sm:text-xl font-black text-[#111111]">Visi</h3>
-                    <p class="mt-1.5 sm:mt-2 text-xs sm:text-sm text-neutral-600 leading-relaxed">
+                    <h3 class="text-xl sm:text-2xl font-heading font-bold text-[#111111]">Visi</h3>
+                    <p class="mt-1.5 sm:mt-2 text-xs sm:text-sm font-normal text-neutral-600 leading-relaxed">
                         Menjadi pusat kebugaran yang mendukung masyarakat Kota Palopo untuk menjalani gaya hidup sehat dan aktif.
                     </p>
                 </div>
@@ -101,8 +101,8 @@
                     </svg>
                 </div>
                 <div>
-                    <h3 class="text-lg sm:text-xl font-black text-[#111111]">Misi</h3>
-                    <p class="mt-1.5 sm:mt-2 text-xs sm:text-sm text-neutral-600 leading-relaxed">
+                    <h3 class="text-xl sm:text-2xl font-heading font-bold text-[#111111]">Misi</h3>
+                    <p class="mt-1.5 sm:mt-2 text-xs sm:text-sm font-normal text-neutral-600 leading-relaxed">
                         Menyediakan fasilitas latihan yang nyaman, mendukung kebiasaan berolahraga secara konsisten, dan membantu anggota mencapai tujuan kebugaran mereka.
                     </p>
                 </div>
@@ -110,19 +110,26 @@
 
         </div>
 
-        <!-- Banner Bawah (Mulai Perjalanan Kebugaran Anda) -->
-        <div class="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-[#111111] p-6 sm:p-10 text-white shadow-md flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-6 text-center sm:text-left">
-            <div class="space-y-1">
-                <h3 class="text-lg sm:text-2xl font-black tracking-tight text-white">
+        <!-- Banner Bawah (Mulai Perjalanan Kebugaran Anda) Sesuai Figma Profil.png -->
+        <div class="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-neutral-900 p-6 sm:p-10 text-white shadow-lg border border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-6 text-center sm:text-left">
+            <!-- Background Image Gym Asli -->
+            <img src="/images/dumbell.jpg"
+                 alt="Fasilitas Latihan MULTI FITNES CENTRE Palopo"
+                 class="absolute inset-0 h-full w-full object-cover object-center">
+            <!-- Dark Gradient Overlay for Supreme Contrast -->
+            <div class="absolute inset-0 bg-gradient-to-r from-black/95 via-black/85 to-black/75"></div>
+
+            <div class="relative z-10 space-y-1">
+                <h3 class="text-xl sm:text-2xl lg:text-3xl font-heading font-bold tracking-normal text-white">
                     Mulai Perjalanan Kebugaran Anda
                 </h3>
-                <p class="text-xs sm:text-sm text-neutral-300">
+                <p class="text-xs sm:text-sm font-normal text-neutral-300">
                     Pilih paket latihan yang sesuai dan bergabung bersama MULTI FITNES CENTRE.
                 </p>
             </div>
             <a href="{{ route('paket') }}" 
-               class="w-full sm:w-auto shrink-0 inline-flex items-center justify-center min-h-[44px] rounded-xl bg-white px-6 py-3 text-xs sm:text-sm font-bold text-[#111111] hover:bg-neutral-100 transition-colors shadow">
-                Lihat Paket & Harga
+               class="relative z-10 w-full sm:w-auto shrink-0 inline-flex items-center justify-center min-h-[46px] rounded-xl bg-orange-600 hover:bg-orange-500 text-white px-6 py-3.5 text-xs sm:text-sm font-semibold transition-all shadow-md shadow-orange-600/30">
+                Lihat Paket &amp; Harga
             </a>
         </div>
 

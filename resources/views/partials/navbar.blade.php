@@ -1,34 +1,38 @@
 <header class="sticky top-0 z-40 w-full bg-[#1c1d1d] text-white border-b border-neutral-800 transition-all">
     <div class="mx-auto flex h-16 sm:h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         
-        <!-- Logo Brand (Sesuai Figma: Ikon Dumbbell + MFC) -->
+        <!-- Logo Brand (Sesuai Figma: Ikon Dumbbell + MFC dengan aksen oranye) -->
         <a href="{{ route('home') }}" class="group flex items-center gap-2.5 py-2">
-            <svg class="h-6 w-6 text-white shrink-0" viewBox="0 0 24 24" fill="currentColor">
+            <svg class="h-6 w-6 text-white shrink-0 group-hover:text-orange-500 transition-colors" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M5 9a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h1zm15 0a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h1zm-13 2a1 1 0 0 1 1 1v0a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v0a1 1 0 0 1 1-1h1zm11 0a1 1 0 0 1 1 1v0a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v0a1 1 0 0 1 1-1h1zM8 11h8v2H8v-2zM2 10a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-4zm15 0a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-4z"/>
             </svg>
-            <span class="text-xl font-black tracking-wider text-white">MFC</span>
+            <span class="text-2xl font-heading font-extrabold tracking-wider text-white">MFC<span class="text-orange-500">.</span></span>
         </a>
 
-        <!-- Desktop Navigation Links (Sesuai Figma: Beranda, Profil, Paket & Harga, Pendaftaran, Kontak) -->
+        <!-- Desktop Navigation Links (Sesuai Figma: Beranda, Profil, Paket & Harga, Pendaftaran, Cek Status, Kontak) -->
         <nav class="hidden items-center gap-1 lg:gap-1.5 md:flex" aria-label="Navigasi Utama">
             <a href="{{ route('home') }}" 
-               class="rounded-xl px-3.5 lg:px-4 py-2 text-xs lg:text-sm font-semibold transition-colors {{ request()->routeIs('home') ? 'bg-neutral-800 text-white' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
+               class="rounded-xl px-3.5 lg:px-4 py-2 text-xs lg:text-sm font-semibold transition-colors {{ request()->routeIs('home') ? 'bg-neutral-800 text-white ring-1 ring-orange-500/40 shadow-xs' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
                 Beranda
             </a>
             <a href="{{ route('profil') }}" 
-               class="rounded-xl px-3.5 lg:px-4 py-2 text-xs lg:text-sm font-semibold transition-colors {{ request()->routeIs('profil') ? 'bg-neutral-800 text-white' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
+               class="rounded-xl px-3.5 lg:px-4 py-2 text-xs lg:text-sm font-semibold transition-colors {{ request()->routeIs('profil') ? 'bg-neutral-800 text-white ring-1 ring-orange-500/40 shadow-xs' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
                 Profil
             </a>
             <a href="{{ route('paket') }}" 
-               class="rounded-xl px-3.5 lg:px-4 py-2 text-xs lg:text-sm font-semibold transition-colors {{ request()->routeIs('paket') ? 'bg-neutral-800 text-white' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
+               class="rounded-xl px-3.5 lg:px-4 py-2 text-xs lg:text-sm font-semibold transition-colors {{ request()->routeIs('paket') ? 'bg-neutral-800 text-white ring-1 ring-orange-500/40 shadow-xs' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
                 Paket & Harga
             </a>
-            <a href="{{ route('pendaftaran') }}" 
-               class="rounded-xl px-3.5 lg:px-4 py-2 text-xs lg:text-sm font-semibold transition-colors {{ request()->routeIs('pendaftaran') || request()->routeIs('cek-status') ? 'bg-neutral-800 text-white' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
+            <a href="{{ route('pendaftaran') }}"
+               class="rounded-xl px-3.5 lg:px-4 py-2 text-xs lg:text-sm font-semibold transition-colors {{ request()->routeIs('pendaftaran') ? 'bg-neutral-800 text-white ring-1 ring-orange-500/40 shadow-xs' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
                 Pendaftaran
             </a>
-            <a href="{{ route('kontak') }}" 
-               class="rounded-xl px-3.5 lg:px-4 py-2 text-xs lg:text-sm font-semibold transition-colors {{ request()->routeIs('kontak') ? 'bg-neutral-800 text-white' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
+            <a href="{{ route('cek-status') }}"
+               class="rounded-xl px-3.5 lg:px-4 py-2 text-xs lg:text-sm font-semibold transition-colors {{ request()->routeIs('cek-status') ? 'bg-neutral-800 text-white ring-1 ring-orange-500/40 shadow-xs' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
+                Cek Status
+            </a>
+            <a href="{{ route('kontak') }}"
+               class="rounded-xl px-3.5 lg:px-4 py-2 text-xs lg:text-sm font-semibold transition-colors {{ request()->routeIs('kontak') ? 'bg-neutral-800 text-white ring-1 ring-orange-500/40 shadow-xs' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
                 Kontak
             </a>
         </nav>
@@ -53,27 +57,27 @@
     <div id="mobile-menu" class="hidden border-t border-neutral-800 bg-[#1c1d1d] px-4 pt-3 pb-6 md:hidden shadow-xl animate-in slide-in-from-top-2 duration-200">
         <div class="flex flex-col space-y-1">
             <a href="{{ route('home') }}" 
-               class="flex items-center min-h-[44px] rounded-xl px-4 py-3 text-sm font-semibold transition-colors {{ request()->routeIs('home') ? 'bg-neutral-800 text-white' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
+               class="flex items-center min-h-[44px] rounded-xl px-4 py-3 text-sm font-semibold transition-colors {{ request()->routeIs('home') ? 'bg-neutral-800 text-white ring-1 ring-orange-500/40' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
                 Beranda
             </a>
             <a href="{{ route('profil') }}" 
-               class="flex items-center min-h-[44px] rounded-xl px-4 py-3 text-sm font-semibold transition-colors {{ request()->routeIs('profil') ? 'bg-neutral-800 text-white' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
+               class="flex items-center min-h-[44px] rounded-xl px-4 py-3 text-sm font-semibold transition-colors {{ request()->routeIs('profil') ? 'bg-neutral-800 text-white ring-1 ring-orange-500/40' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
                 Profil
             </a>
             <a href="{{ route('paket') }}" 
-               class="flex items-center min-h-[44px] rounded-xl px-4 py-3 text-sm font-semibold transition-colors {{ request()->routeIs('paket') ? 'bg-neutral-800 text-white' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
+               class="flex items-center min-h-[44px] rounded-xl px-4 py-3 text-sm font-semibold transition-colors {{ request()->routeIs('paket') ? 'bg-neutral-800 text-white ring-1 ring-orange-500/40' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
                 Paket & Harga
             </a>
             <a href="{{ route('pendaftaran') }}" 
-               class="flex items-center min-h-[44px] rounded-xl px-4 py-3 text-sm font-semibold transition-colors {{ request()->routeIs('pendaftaran') ? 'bg-neutral-800 text-white' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
+               class="flex items-center min-h-[44px] rounded-xl px-4 py-3 text-sm font-semibold transition-colors {{ request()->routeIs('pendaftaran') ? 'bg-neutral-800 text-white ring-1 ring-orange-500/40' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
                 Pendaftaran
             </a>
             <a href="{{ route('cek-status') }}" 
-               class="flex items-center min-h-[44px] rounded-xl px-4 py-3 text-sm font-semibold transition-colors {{ request()->routeIs('cek-status') ? 'bg-neutral-800 text-white' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
+               class="flex items-center min-h-[44px] rounded-xl px-4 py-3 text-sm font-semibold transition-colors {{ request()->routeIs('cek-status') ? 'bg-neutral-800 text-white ring-1 ring-orange-500/40' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
                 Cek Status Pendaftaran
             </a>
             <a href="{{ route('kontak') }}" 
-               class="flex items-center min-h-[44px] rounded-xl px-4 py-3 text-sm font-semibold transition-colors {{ request()->routeIs('kontak') ? 'bg-neutral-800 text-white' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
+               class="flex items-center min-h-[44px] rounded-xl px-4 py-3 text-sm font-semibold transition-colors {{ request()->routeIs('kontak') ? 'bg-neutral-800 text-white ring-1 ring-orange-500/40' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white' }}">
                 Kontak
             </a>
         </div>

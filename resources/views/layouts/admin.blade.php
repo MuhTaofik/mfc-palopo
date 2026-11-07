@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>@yield('title', 'Admin Panel') - MULTI FITNES CENTRE (MFC) Palopo</title>
+    <!-- Google Fonts: Barlow Condensed (Sporty, Condensed Heading Font) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-mfc-page font-sans text-mfc-ink antialiased flex min-h-screen overflow-x-hidden">
@@ -19,7 +24,7 @@
                     </svg>
                 </div>
                 <div>
-                    <span class="text-sm font-black tracking-wider text-white uppercase block leading-tight">MFC Palopo</span>
+                    <span class="text-base font-heading font-bold tracking-wider text-white uppercase block leading-tight">MFC Palopo</span>
                     <span class="text-[10px] tracking-widest text-neutral-400 uppercase font-semibold">Admin Panel</span>
                 </div>
             </div>
@@ -103,7 +108,7 @@
                         </svg>
                     </div>
                     <div>
-                        <span class="text-xs font-black tracking-wider text-white uppercase block leading-tight">MFC Palopo</span>
+                        <span class="text-sm font-heading font-bold tracking-wider text-white uppercase block leading-tight">MFC Palopo</span>
                         <span class="text-[9px] tracking-widest text-neutral-400 uppercase font-semibold">Admin Panel</span>
                     </div>
                 </div>
@@ -196,7 +201,7 @@
                 </button>
 
                 <div>
-                    <h1 class="text-base sm:text-lg font-black text-mfc-black leading-tight truncate">@yield('page_title', 'Dashboard')</h1>
+                    <h1 class="text-lg sm:text-xl font-heading font-bold text-mfc-black leading-tight tracking-normal truncate">@yield('page_title', 'Dashboard')</h1>
                     <p class="text-[11px] sm:text-xs text-mfc-mute hidden xs:block">Panel Manajemen MULTI FITNES CENTRE (MFC) Palopo</p>
                 </div>
             </div>
@@ -261,7 +266,7 @@
             </div>
 
             <div class="mt-4 text-center space-y-2">
-                <h3 id="delete-modal-title" class="text-base sm:text-lg font-black text-mfc-black">
+                <h3 id="delete-modal-title" class="text-lg sm:text-xl font-heading font-bold text-mfc-black tracking-normal">
                     Konfirmasi Hapus Data
                 </h3>
                 <p class="text-xs sm:text-sm text-neutral-600 leading-relaxed">
@@ -273,11 +278,11 @@
                 @csrf
                 @method('DELETE')
                 <button type="button" onclick="closeDeleteModal()" 
-                        class="w-full sm:w-1/2 flex items-center justify-center min-h-[44px] rounded-xl border border-mfc-line bg-white px-4 py-2.5 text-xs font-bold text-neutral-700 hover:bg-neutral-100 transition-colors">
+                        class="w-full sm:w-1/2 flex items-center justify-center min-h-[44px] rounded-xl border border-mfc-line bg-white px-4 py-2.5 text-xs font-semibold text-neutral-700 hover:bg-neutral-100 transition-colors">
                     Batal
                 </button>
                 <button type="submit" 
-                        class="w-full sm:w-1/2 flex items-center justify-center min-h-[44px] rounded-xl bg-rose-600 px-4 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-rose-700 transition-colors">
+                        class="w-full sm:w-1/2 flex items-center justify-center min-h-[44px] rounded-xl bg-rose-600 px-4 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-rose-700 transition-colors">
                     Ya, Hapus Data
                 </button>
             </form>

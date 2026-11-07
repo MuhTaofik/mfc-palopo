@@ -6,22 +6,26 @@
 @section('admin_content')
     <div class="space-y-5 sm:space-y-6">
         
-        <!-- Filter Tabs (Scrollable on small mobile, wrap on tablet/desktop) -->
+        <!-- Filter Tabs (Sederhana & Konsisten: Hitam, Putih, Oranye) -->
         <div class="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap border-b border-mfc-line sm:border-0">
             <a href="{{ route('admin.registrations.index') }}" 
-               class="whitespace-nowrap shrink-0 rounded-xl px-3.5 sm:px-4 py-2 min-h-[38px] flex items-center text-xs font-bold transition-colors {{ !$currentStatus ? 'bg-mfc-black text-white shadow-xs' : 'bg-white border border-mfc-line text-mfc-mute hover:bg-mfc-page' }}">
+               class="whitespace-nowrap shrink-0 rounded-xl px-3.5 sm:px-4 py-2 min-h-[38px] flex items-center gap-1.5 text-xs font-bold transition-all {{ !$currentStatus ? 'bg-mfc-black text-white shadow-xs border border-mfc-black' : 'bg-white border border-mfc-line text-mfc-mute hover:bg-neutral-50 hover:text-mfc-black' }}">
+                @if(!$currentStatus) <span class="h-1.5 w-1.5 rounded-full bg-orange-500"></span> @endif
                 Semua Pendaftaran
             </a>
             <a href="{{ route('admin.registrations.index', ['status' => 'Menunggu']) }}" 
-               class="whitespace-nowrap shrink-0 rounded-xl px-3.5 sm:px-4 py-2 min-h-[38px] flex items-center text-xs font-bold transition-colors {{ $currentStatus === 'Menunggu' ? 'bg-amber-600 text-white shadow-xs' : 'bg-white border border-mfc-line text-mfc-mute hover:bg-mfc-page' }}">
+               class="whitespace-nowrap shrink-0 rounded-xl px-3.5 sm:px-4 py-2 min-h-[38px] flex items-center gap-1.5 text-xs font-bold transition-all {{ $currentStatus === 'Menunggu' ? 'bg-mfc-black text-white shadow-xs border border-mfc-black' : 'bg-white border border-mfc-line text-mfc-mute hover:bg-neutral-50 hover:text-mfc-black' }}">
+                <span class="h-1.5 w-1.5 rounded-full {{ $currentStatus === 'Menunggu' ? 'bg-orange-500' : 'bg-amber-400' }}"></span>
                 Menunggu
             </a>
             <a href="{{ route('admin.registrations.index', ['status' => 'Diterima']) }}" 
-               class="whitespace-nowrap shrink-0 rounded-xl px-3.5 sm:px-4 py-2 min-h-[38px] flex items-center text-xs font-bold transition-colors {{ $currentStatus === 'Diterima' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-white border border-mfc-line text-mfc-mute hover:bg-mfc-page' }}">
+               class="whitespace-nowrap shrink-0 rounded-xl px-3.5 sm:px-4 py-2 min-h-[38px] flex items-center gap-1.5 text-xs font-bold transition-all {{ $currentStatus === 'Diterima' ? 'bg-mfc-black text-white shadow-xs border border-mfc-black' : 'bg-white border border-mfc-line text-mfc-mute hover:bg-neutral-50 hover:text-mfc-black' }}">
+                @if($currentStatus === 'Diterima') <span class="h-1.5 w-1.5 rounded-full bg-orange-500"></span> @endif
                 Diterima
             </a>
             <a href="{{ route('admin.registrations.index', ['status' => 'Ditolak']) }}" 
-               class="whitespace-nowrap shrink-0 rounded-xl px-3.5 sm:px-4 py-2 min-h-[38px] flex items-center text-xs font-bold transition-colors {{ $currentStatus === 'Ditolak' ? 'bg-rose-600 text-white shadow-xs' : 'bg-white border border-mfc-line text-mfc-mute hover:bg-mfc-page' }}">
+               class="whitespace-nowrap shrink-0 rounded-xl px-3.5 sm:px-4 py-2 min-h-[38px] flex items-center gap-1.5 text-xs font-bold transition-all {{ $currentStatus === 'Ditolak' ? 'bg-mfc-black text-white shadow-xs border border-mfc-black' : 'bg-white border border-mfc-line text-mfc-mute hover:bg-neutral-50 hover:text-mfc-black' }}">
+                @if($currentStatus === 'Ditolak') <span class="h-1.5 w-1.5 rounded-full bg-orange-500"></span> @endif
                 Ditolak
             </a>
         </div>
@@ -43,15 +47,16 @@
                             </div>
                             <div>
                                 @if($reg->status_pendaftaran === 'Menunggu')
-                                    <span class="inline-flex rounded-full bg-amber-50 border border-amber-200 px-2.5 py-0.5 text-[11px] font-bold text-amber-800">
+                                    <span class="inline-flex items-center gap-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 px-2.5 py-0.5 text-[11px] font-bold text-amber-800">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>
                                         Menunggu
                                     </span>
                                 @elseif($reg->status_pendaftaran === 'Diterima')
-                                    <span class="inline-flex rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 text-[11px] font-bold text-emerald-800">
+                                    <span class="inline-flex rounded-full bg-[#1c1d1d] px-2.5 py-0.5 text-[11px] font-bold text-white shadow-xs">
                                         Diterima
                                     </span>
                                 @else
-                                    <span class="inline-flex rounded-full bg-rose-50 border border-rose-200 px-2.5 py-0.5 text-[11px] font-bold text-rose-800">
+                                    <span class="inline-flex rounded-full bg-neutral-100 border border-neutral-200 px-2.5 py-0.5 text-[11px] font-semibold text-neutral-600">
                                         Ditolak
                                     </span>
                                 @endif
@@ -144,15 +149,15 @@
             <!-- Desktop Table View (>= md) -->
             <div class="hidden md:block overflow-x-auto">
                 <table class="w-full text-left text-sm">
-                    <thead class="bg-mfc-page border-b border-mfc-line text-xs uppercase tracking-wider text-mfc-mute font-bold">
+                    <thead class="bg-[#1c1d1d] text-white text-xs uppercase tracking-wider font-extrabold border-b border-neutral-800">
                         <tr>
-                            <th class="px-6 py-4">ID & Tgl Daftar</th>
-                            <th class="px-6 py-4">Nama Calon Member</th>
-                            <th class="px-6 py-4">Kontak & Alamat</th>
-                            <th class="px-6 py-4">Paket Dipilih</th>
-                            <th class="px-6 py-4">Rencana Mulai</th>
-                            <th class="px-6 py-4">Status</th>
-                            <th class="px-6 py-4 text-right">Aksi</th>
+                            <th class="px-6 py-4 text-white">ID & Tgl Daftar</th>
+                            <th class="px-6 py-4 text-white">Nama Calon Member</th>
+                            <th class="px-6 py-4 text-white">Kontak & Alamat</th>
+                            <th class="px-6 py-4 text-white">Paket Dipilih</th>
+                            <th class="px-6 py-4 text-white">Rencana Mulai</th>
+                            <th class="px-6 py-4 text-white">Status</th>
+                            <th class="px-6 py-4 text-right text-white">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-mfc-line">
@@ -193,15 +198,16 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     @if($reg->status_pendaftaran === 'Menunggu')
-                                        <span class="inline-flex rounded-full bg-amber-50 border border-amber-200 px-3 py-1 text-xs font-bold text-amber-800">
+                                        <span class="inline-flex items-center gap-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 px-3 py-1 text-xs font-bold text-amber-800">
+                                            <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>
                                             Menunggu
                                         </span>
                                     @elseif($reg->status_pendaftaran === 'Diterima')
-                                        <span class="inline-flex rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-xs font-bold text-emerald-800">
+                                        <span class="inline-flex rounded-full bg-[#1c1d1d] px-3 py-1 text-xs font-bold text-white shadow-xs">
                                             Diterima
                                         </span>
                                     @else
-                                        <span class="inline-flex rounded-full bg-rose-50 border border-rose-200 px-3 py-1 text-xs font-bold text-rose-800">
+                                        <span class="inline-flex rounded-full bg-neutral-100 border border-neutral-200 px-3 py-1 text-xs font-semibold text-neutral-600">
                                             Ditolak
                                         </span>
                                     @endif

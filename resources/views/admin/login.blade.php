@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Login Admin - MULTI FITNES CENTRE (MFC) Palopo</title>
+    <!-- Google Fonts: Barlow Condensed (Sporty, Condensed Heading Font) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-mfc-black min-h-screen flex items-center justify-center p-4 selection:bg-mfc-dark selection:text-white relative overflow-hidden">
@@ -26,7 +31,7 @@
                     </svg>
                 </div>
                 <div>
-                    <h1 class="text-lg sm:text-xl font-black uppercase tracking-wider text-mfc-black">MULTI FITNES CENTRE</h1>
+                    <h1 class="text-xl sm:text-2xl font-heading font-bold uppercase tracking-wider text-mfc-black">MULTI FITNES CENTRE</h1>
                     <p class="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-mfc-mute">Panel Autentikasi Pengelola</p>
                 </div>
             </div>
@@ -86,7 +91,7 @@
                 </div>
 
                 <button type="submit" 
-                        class="w-full inline-flex items-center justify-center rounded-xl bg-mfc-black py-3.5 min-h-[48px] text-xs font-black uppercase tracking-wider text-white shadow-md hover:bg-mfc-dark transition-all active:scale-98">
+                        class="w-full inline-flex items-center justify-center rounded-xl bg-mfc-black py-3.5 min-h-[48px] text-xs sm:text-sm font-semibold uppercase tracking-wider text-white shadow-md hover:bg-mfc-dark transition-all active:scale-98">
                     Masuk ke Dashboard
                 </button>
             </form>
